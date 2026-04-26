@@ -71,3 +71,6 @@ export default defineConfig([
   },
 ])
 ```
+
+### Como rodar o código?
+-npm run dev
