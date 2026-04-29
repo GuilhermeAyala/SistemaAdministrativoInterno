@@ -20,11 +20,38 @@ function EditarColaborador({colaboradores, setColaboradores }: Props){
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>){
-         setFormEditar({...formEditar, [e.target.name]: e.target.value} as Colaborador);
+        const { name, value } = e.target;
+        setFormEditar({
+            ...formEditar,
+            [name]: name === "idade" || name === "salario" ? Number(value) : value
+        } as Colaborador);
+    }
+
+    function validarEdicao(formEditar:Colaborador): boolean{
+       const { name, cargo, idade, salario } = formEditar;
+       const contemNumero = /\d/;
+
+       if(contemNumero.test(name) || contemNumero.test(cargo)){
+        alert("Nome não pode conter numeros");
+        return false;
+       }
+       if(idade < 18){
+        alert("O colaborador deve ter mais de 18 anos");
+        return false;
+       }
+       if(salario <= 0){
+        alert("Salario não pode ser igual ou menor que zero");
+        return false
+       }
+        
+        return true;
     }
 
     function salvarEdicao(){
         if(!formEditar) return;
+        if(!validarEdicao(formEditar)){
+            return;
+        }
         setColaboradores(colaboradores.map(c => c.id === formEditar.id ? formEditar: c));
         navigate("/telaAdmin");
     }

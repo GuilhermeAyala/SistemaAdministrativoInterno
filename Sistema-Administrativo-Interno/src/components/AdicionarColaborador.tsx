@@ -9,7 +9,6 @@ type Props = {
 }
 
 function AdicionarColaborador({colaboradores, setColaboradores}: Props){
-    console.log("Renderizou");
     const navigate = useNavigate();
     const [form, setForm] = useState({
         name: "",
@@ -23,6 +22,8 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
     }
 
     function criarColaborador(){
+        const nameString = String(form.name);
+        const cargoString = String(form.cargo)
         const idadeNum = Number(form.idade);
         const salarioNum = Number(form.salario);
 
@@ -30,8 +31,12 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
             alert("Preencha todos os campos!");
             return;
         }
-        if(idadeNum < 18){
-            alert("Colaborador não pode ser menor de idade")
+        if(/\d/.test(nameString) || /\d/.test(cargoString)){
+            alert("Nome ou cargo só podem ter letras")
+            return;
+        }
+        if(idadeNum < 18 && idadeNum > 65){
+            alert("Colaborador não pode ser menor de idade ou aposentado");
             return;
         }
         if(salarioNum <= 0){
