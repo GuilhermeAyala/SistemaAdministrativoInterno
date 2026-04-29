@@ -1,10 +1,12 @@
 import { Colaborador } from "../types/colaborador";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     colaboradores?: Colaborador[];
 }
 
 function ListaColaborador({colaboradores = []}: Props){
+    const navigate = useNavigate();
 
     return(
         <div>
@@ -17,6 +19,8 @@ function ListaColaborador({colaboradores = []}: Props){
                     <p><strong>Cargo:</strong> {colaborador.cargo}</p>
                     <p><strong>Idade:</strong> {colaborador.idade}</p>
                     <p><strong>Salário:</strong> R$ {colaborador.salario}</p>
+                    <button onClick={() => navigate("/editarColaborador/" + colaborador.id)}>Editar</button>
+                    <button>Excluir</button>
                     <hr />
                 </div>
             ))}

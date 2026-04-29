@@ -23,8 +23,19 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
     }
 
     function criarColaborador(){
+        const idadeNum = Number(form.idade);
+        const salarioNum = Number(form.salario);
+
         if (!form.name || !form.cargo || !form.idade || !form.salario) {
             alert("Preencha todos os campos!");
+            return;
+        }
+        if(idadeNum < 18){
+            alert("Colaborador não pode ser menor de idade")
+            return;
+        }
+        if(salarioNum <= 0){
+            alert("Salário deve ser maior que 0");
             return;
         }
 
