@@ -35,7 +35,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
             alert("Nome ou cargo só podem ter letras")
             return;
         }
-        if(idadeNum < 18 && idadeNum > 65){
+        if(idadeNum < 18 || idadeNum > 65){
             alert("Colaborador não pode ser menor de idade ou aposentado");
             return;
         }
@@ -45,7 +45,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
         }
 
     const novoColaborador: Colaborador = {
-            id: colaboradores.length + 1,
+            id: Date.now(),
             name: form.name,
             cargo: form.cargo,
             idade: Number(form.idade),

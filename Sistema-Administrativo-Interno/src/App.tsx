@@ -9,13 +9,15 @@ import './App.css';
 
 function App() {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
-  console.log("App renderizou");
+  function excluirColaborador(id: number) {
+    setColaboradores(prev => prev.filter(c => c.id !== id));
+}
 
   return (
     <Router>
       <Routes>
           <Route path="/" element={<LoginForm/>} />
-          <Route path="/telaAdmin" element={<TelaAdmin colaboradores={colaboradores}/>} />
+          <Route path="/telaAdmin" element={<TelaAdmin colaboradores={colaboradores} setColaboradores={setColaboradores} onExcluir={excluirColaborador}/>} />
           <Route path="/adicionarColaborador" element={<AdicionarColaborador colaboradores={colaboradores} setColaboradores={setColaboradores} />} />
           <Route path="/editarColaborador/:id" element={<EditarColaborador colaboradores={colaboradores} setColaboradores={setColaboradores}/>} />
       </Routes>

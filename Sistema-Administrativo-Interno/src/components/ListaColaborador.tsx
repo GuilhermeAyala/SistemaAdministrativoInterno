@@ -2,11 +2,20 @@ import { Colaborador } from "../types/colaborador";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-    colaboradores?: Colaborador[];
+    colaboradores: Colaborador[];
+    onExcluir: (id: number) => void;
 }
 
-function ListaColaborador({colaboradores = []}: Props){
+function ListaColaborador({colaboradores = [], onExcluir}: Props){
     const navigate = useNavigate();
+
+    function excluirColaborador(id: number) {
+        const confirmar = window.confirm("Tem certeza que deseja excluir este colaborador?");
+        if(!confirmar){
+            return ;
+        }
+        onExcluir(id);
+    }
 
     return(
         <div>
@@ -20,7 +29,7 @@ function ListaColaborador({colaboradores = []}: Props){
                     <p><strong>Idade:</strong> {colaborador.idade}</p>
                     <p><strong>Salário:</strong> R$ {colaborador.salario}</p>
                     <button onClick={() => navigate("/editarColaborador/" + colaborador.id)}>Editar</button>
-                    <button>Excluir</button>
+                    <button onClick={() => excluirColaborador(colaborador.id)}>Excluir</button>
                     <hr />
                 </div>
             ))}
