@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Colaborador } from './types/colaborador';
 import LoginForm from './components/LoginForm';
@@ -8,7 +8,15 @@ import TelaAdmin from './components/TelaAdmin';
 import './App.css';
 
 function App() {
-  const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
+  const [colaboradores, setColaboradores] = useState<Colaborador[]>(() => {
+    const salvo = localStorage.getItem("colaboradores");
+    return salvo ? JSON.parse(salvo) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("colaboradores", JSON.stringify(colaboradores))
+  }, [colaboradores]);
+
   function excluirColaborador(id: number) {
     setColaboradores(prev => prev.filter(c => c.id !== id));
 }

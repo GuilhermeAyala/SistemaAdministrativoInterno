@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Colaborador } from "../types/colaborador";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +10,11 @@ type Props = {
 function ListaColaborador({colaboradores = [], onExcluir}: Props){
     const navigate = useNavigate();
 
+    const [filtroNome, setFiltroNome] = useState("");
+    const [filtroCargo, setFiltroCargo] = useState("");
+    const [salarioMin, setSalarioMin] = useState("");
+    const [salarioMax, setSalarioMax] = useState("");
+
     function excluirColaborador(id: number) {
         const confirmar = window.confirm("Tem certeza que deseja excluir este colaborador?");
         if(!confirmar){
@@ -17,12 +23,49 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
         onExcluir(id);
     }
 
+    const colaboradoresFiltrados = colaboradores.filter((colaborador) => {
+        const nome = colaborador.name.toLocaleLowerCase().includes(filtroNome.toLowerCase());
+        const cargo = colaborador.cargo.toLowerCase().includes(filtroCargo.toLowerCase());
+        const min = salarioMin === "" || colaborador.salario >= Number(salarioMin);
+        const max = salarioMax === "" || colaborador.salario <= Number(salarioMax);
+        return nome && cargo && min && max;
+    })
+
     return(
         <div>
 
             <h2>Lista Colaboradores</h2>
+
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                <input
+                    type="text"
+                    placeholder="Filtrar por nome"
+                    value={filtroNome}
+                    onChange={(e) => setFiltroNome(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Filtrar por cargo"
+                    value={filtroCargo}
+                    onChange={(e) => setFiltroCargo(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="Salário mínimo"
+                    value={salarioMin}
+                    onChange={(e) => setSalarioMin(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="Salário máximo"
+                    value={salarioMax}
+                    onChange={(e) => setSalarioMax(e.target.value)}
+                />
+            </div>
+
             {colaboradores.length === 0 && <p>Nenhum colaborador cadastrado</p>}
-            {colaboradores.map((colaborador) => (
+
+            {colaboradoresFiltrados.map((colaborador) => (
                 <div key={colaborador.id} style={{display: "flex", gap: "1rem"}}>
                     <p><strong>Nome:</strong> {colaborador.name}</p>
                     <p><strong>Cargo:</strong> {colaborador.cargo}</p>

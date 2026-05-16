@@ -59,10 +59,10 @@ function EditarColaborador({colaboradores, setColaboradores }: Props){
     return(
         <div>
             <h1>Editar Colaborador</h1>
-            <input name="name" placeholder="Nome" value={formEditar.name} type="text" onChange={handleChange}/>
-            <input name="cargo" placeholder="Cargo" value={formEditar.cargo} type="text" onChange={handleChange}/>
-            <input name="idade" placeholder="Idade" value={formEditar.idade} type="number" onChange={handleChange}/>
-            <input name="salario" placeholder="Salario" value={formEditar.salario} type="number" onChange={handleChange}/>
+            <input name="name" placeholder="Nome" value={formEditar.name} type="text" onChange={handleChange}/><br />
+            <input name="cargo" placeholder="Cargo" value={formEditar.cargo} type="text" onChange={handleChange}/><br />
+            <input name="idade" placeholder="Idade" value={formEditar.idade} type="number" onChange={handleChange}/><br />
+            <input name="salario" placeholder="Salario" value={formEditar.salario} type="number" onChange={handleChange}/><br />
             <button onClick={salvarEdicao}>Salvar</button>
             <button onClick={() => navigate("/telaAdmin")}>Cancelar</button>
         </div>
