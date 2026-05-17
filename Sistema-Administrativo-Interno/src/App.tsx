@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm';
 import AdicionarColaborador from './components/AdicionarColaborador';
 import EditarColaborador from './components/EditarColaborador';
 import TelaAdmin from './components/TelaAdmin';
+import Dashboard from './components/dashboard';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/telaAdmin" element={<TelaAdmin colaboradores={colaboradores} setColaboradores={setColaboradores} onExcluir={excluirColaborador}/>} />
           <Route path="/adicionarColaborador" element={<AdicionarColaborador colaboradores={colaboradores} setColaboradores={setColaboradores} />} />
           <Route path="/editarColaborador/:id" element={<EditarColaborador colaboradores={colaboradores} setColaboradores={setColaboradores}/>} />
+          <Route path='/Dashboard' element={<Dashboard colaboradores={colaboradores} />}/>
       </Routes>
     </Router>
   )

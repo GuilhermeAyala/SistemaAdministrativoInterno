@@ -12,6 +12,7 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
 
     const [filtroNome, setFiltroNome] = useState("");
     const [filtroCargo, setFiltroCargo] = useState("");
+    const [filtroAreaCargo, setFiltroAreaCargo] = useState("");
     const [salarioMin, setSalarioMin] = useState("");
     const [salarioMax, setSalarioMax] = useState("");
 
@@ -26,9 +27,10 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
     const colaboradoresFiltrados = colaboradores.filter((colaborador) => {
         const nome = colaborador.name.toLocaleLowerCase().includes(filtroNome.toLowerCase());
         const cargo = colaborador.cargo.toLowerCase().includes(filtroCargo.toLowerCase());
+        const areaCargo = colaborador.areaCargo.toLowerCase().includes(filtroAreaCargo.toLowerCase());
         const min = salarioMin === "" || colaborador.salario >= Number(salarioMin);
         const max = salarioMax === "" || colaborador.salario <= Number(salarioMax);
-        return nome && cargo && min && max;
+        return nome && cargo && areaCargo && min && max;
     })
 
     return(
@@ -48,6 +50,12 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
                     placeholder="Filtrar por cargo"
                     value={filtroCargo}
                     onChange={(e) => setFiltroCargo(e.target.value)}
+                />
+                <input 
+                    type="text"
+                    placeholder="Filtrar por área do cargo"
+                    value={filtroAreaCargo}
+                    onChange={(e) => setFiltroAreaCargo(e.target.value)}
                 />
                 <input
                     type="number"
@@ -69,6 +77,7 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
                 <div key={colaborador.id} style={{display: "flex", gap: "1rem"}}>
                     <p><strong>Nome:</strong> {colaborador.name}</p>
                     <p><strong>Cargo:</strong> {colaborador.cargo}</p>
+                    <p><strong>Área Cargo:</strong> {colaborador.areaCargo}</p>
                     <p><strong>Idade:</strong> {colaborador.idade}</p>
                     <p><strong>Salário:</strong> R$ {colaborador.salario}</p>
                     <button onClick={() => navigate("/editarColaborador/" + colaborador.id)}>Editar</button>

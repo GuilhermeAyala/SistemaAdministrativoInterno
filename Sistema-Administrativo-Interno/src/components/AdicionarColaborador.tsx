@@ -12,6 +12,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
     const navigate = useNavigate();
     const [form, setForm] = useState({
         name: "",
+        areaCargo: "",
         cargo: "",
         idade: "",
         salario: "",
@@ -23,16 +24,17 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
 
     function criarColaborador(){
         const nameString = String(form.name);
+        const areaCargoString = String(form.areaCargo);
         const cargoString = String(form.cargo)
         const idadeNum = Number(form.idade);
         const salarioNum = Number(form.salario);
 
-        if (!form.name || !form.cargo || !form.idade || !form.salario) {
+        if (!form.name || !form.areaCargo || !form.cargo || !form.idade || !form.salario) {
             alert("Preencha todos os campos!");
             return;
         }
-        if(/\d/.test(nameString) || /\d/.test(cargoString)){
-            alert("Nome ou cargo só podem ter letras")
+        if(/\d/.test(nameString) || /\d/.test(areaCargoString) ||/\d/.test(cargoString)){
+            alert("Nome, cargo ou área do cargo só podem ter letras")
             return;
         }
         if(idadeNum < 18 || idadeNum > 65){
@@ -47,6 +49,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
     const novoColaborador: Colaborador = {
             id: Date.now(),
             name: form.name,
+            areaCargo: form.areaCargo,
             cargo: form.cargo,
             idade: Number(form.idade),
             salario: Number(form.salario),
@@ -62,6 +65,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
             <h2>Cadastrar Colaborador</h2>
                 <div>
                     <input name="name"   placeholder="Nome"    value={form.name}   onChange={handleChange} />
+                    <input name="areaCargo"  placeholder="Área do Cargo"   value={form.areaCargo}  onChange={handleChange} />
                     <input name="cargo"  placeholder="Cargo"   value={form.cargo}  onChange={handleChange} />
                     <input name="idade"  placeholder="Idade"   value={form.idade}  onChange={handleChange} type="number" />
                     <input name="salario" placeholder="Salário" value={form.salario} onChange={handleChange} type="number" /><br />

@@ -16,6 +16,7 @@ function TelaAdmin({colaboradores, onExcluir}: Props){
             <h1>Seja bem vindo!</h1>
             <button onClick={() => navigate("/adicionarColaborador")}>Adicionar Colaborador</button>
             <ListaColaborador colaboradores={colaboradores} onExcluir={onExcluir}/>
+            <button onClick={() => navigate("/Dashboard")}>Acessar DashBoard</button>
             <button onClick={() => navigate("/")}>Sair</button>
         </div>
     )
