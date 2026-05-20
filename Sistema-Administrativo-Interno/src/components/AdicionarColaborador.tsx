@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Colaborador } from "../types/colaborador";
+import { Colaborador, Areas_Cargo, AreaCargo } from "../types/colaborador";
 
 type Props = {
     colaboradores: Colaborador[];
@@ -12,7 +12,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
     const navigate = useNavigate();
     const [form, setForm] = useState({
         name: "",
-        areaCargo: "",
+        areaCargo: "" as AreaCargo | "",
         cargo: "",
         idade: "",
         salario: "",
@@ -20,6 +20,10 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setForm({ ...form, [e.target.name]: e.target.value });
+    }
+
+    function handleSelectChange(e: React.ChangeEvent<HTMLSelectElement>){
+        setForm({...form, areaCargo: e.target.value as AreaCargo});
     }
 
     function criarColaborador(){
@@ -49,7 +53,7 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
     const novoColaborador: Colaborador = {
             id: Date.now(),
             name: form.name,
-            areaCargo: form.areaCargo,
+            areaCargo: form.areaCargo as AreaCargo,
             cargo: form.cargo,
             idade: Number(form.idade),
             salario: Number(form.salario),
@@ -65,7 +69,12 @@ function AdicionarColaborador({colaboradores, setColaboradores}: Props){
             <h2>Cadastrar Colaborador</h2>
                 <div>
                     <input name="name"   placeholder="Nome"    value={form.name}   onChange={handleChange} />
-                    <input name="areaCargo"  placeholder="Área do Cargo"   value={form.areaCargo}  onChange={handleChange} />
+                    <select value={form.areaCargo} onChange={handleSelectChange}>
+                        <option value="">Selecione a área</option>
+                        {Areas_Cargo.map((area) => (
+                            <option key={area} value={area}>{area}</option>
+                        ))}
+                    </select>
                     <input name="cargo"  placeholder="Cargo"   value={form.cargo}  onChange={handleChange} />
                     <input name="idade"  placeholder="Idade"   value={form.idade}  onChange={handleChange} type="number" />
                     <input name="salario" placeholder="Salário" value={form.salario} onChange={handleChange} type="number" /><br />

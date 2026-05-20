@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Colaborador } from "../types/colaborador";
+import { Colaborador, Areas_Cargo, AreaCargo } from "../types/colaborador";
 
 type Props = {
     colaboradores: Colaborador[];
@@ -25,6 +25,10 @@ function EditarColaborador({colaboradores, setColaboradores }: Props){
             ...formEditar,
             [name]: name === "idade" || name === "salario" ? Number(value) : value
         } as Colaborador);
+    }
+
+    function handleSelectChange(e: React.ChangeEvent<HTMLSelectElement>){
+        setFormEditar({...formEditar, areaCargo: e.target.value as AreaCargo} as Colaborador)
     }
 
     function validarEdicao(formEditar:Colaborador): boolean{
@@ -60,6 +64,11 @@ function EditarColaborador({colaboradores, setColaboradores }: Props){
         <div>
             <h1>Editar Colaborador</h1>
             <input name="name" placeholder="Nome" value={formEditar.name} type="text" onChange={handleChange}/><br />
+            <select value={formEditar.areaCargo} onChange={handleSelectChange}>
+                {Areas_Cargo.map((area) => (
+                    <option key={area} value={area}>{area}</option>
+                ))}
+            </select>
             <input name="cargo" placeholder="Cargo" value={formEditar.cargo} type="text" onChange={handleChange}/><br />
             <input name="idade" placeholder="Idade" value={formEditar.idade} type="number" onChange={handleChange}/><br />
             <input name="salario" placeholder="Salario" value={formEditar.salario} type="number" onChange={handleChange}/><br />

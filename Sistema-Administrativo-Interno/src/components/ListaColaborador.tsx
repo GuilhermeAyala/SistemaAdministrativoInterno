@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Colaborador } from "../types/colaborador";
+import { Colaborador, Areas_Cargo } from "../types/colaborador";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
@@ -51,12 +51,15 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
                     value={filtroCargo}
                     onChange={(e) => setFiltroCargo(e.target.value)}
                 />
-                <input 
-                    type="text"
-                    placeholder="Filtrar por área do cargo"
+                <select
                     value={filtroAreaCargo}
                     onChange={(e) => setFiltroAreaCargo(e.target.value)}
-                />
+                >
+                    <option value="">Todas as áreas</option>
+                    {Areas_Cargo.map((area) => (
+                        <option key={area} value={area}>{area}</option>
+                    ))}
+                </select>
                 <input
                     type="number"
                     placeholder="Salário mínimo"
