@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Colaborador, Areas_Cargo, AreaCargo } from "../types/colaborador";
+import { Colaborador, Areas_Cargo, AreaCargo, StatusColaborador } from "../types/colaborador";
 
 type Props = {
     colaboradores: Colaborador[];
     setColaboradores: React.Dispatch<React.SetStateAction<Colaborador[]>>;
 
 }
+
+const status_options: StatusColaborador[] = ["Ativo", "Inativo", "Afastado", "Ferias"];
 
 function EditarColaborador({colaboradores, setColaboradores }: Props){
     const {id} = useParams();
@@ -64,12 +66,17 @@ function EditarColaborador({colaboradores, setColaboradores }: Props){
         <div>
             <h1>Editar Colaborador</h1>
             <input name="name" placeholder="Nome" value={formEditar.name} type="text" onChange={handleChange}/><br />
-            <select value={formEditar.areaCargo} onChange={handleSelectChange}>
+            <select name="areaCargo" value={formEditar.areaCargo} onChange={handleSelectChange}>
                 {Areas_Cargo.map((area) => (
                     <option key={area} value={area}>{area}</option>
                 ))}
             </select>
             <input name="cargo" placeholder="Cargo" value={formEditar.cargo} type="text" onChange={handleChange}/><br />
+            <select name="status" value={formEditar.status} onChange={handleSelectChange}>
+                {status_options.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                ))}
+            </select>
             <input name="idade" placeholder="Idade" value={formEditar.idade} type="number" onChange={handleChange}/><br />
             <input name="salario" placeholder="Salario" value={formEditar.salario} type="number" onChange={handleChange}/><br />
             <button onClick={salvarEdicao}>Salvar</button>

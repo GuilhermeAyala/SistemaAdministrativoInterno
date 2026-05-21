@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Colaborador, Areas_Cargo } from "../types/colaborador";
+import { Colaborador, Areas_Cargo, StatusColaborador } from "../types/colaborador";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
@@ -7,12 +7,15 @@ type Props = {
     onExcluir: (id: number) => void;
 }
 
+const status_options: StatusColaborador[] = ["Ativo", "Inativo", "Afastado", "Ferias"];
+
 function ListaColaborador({colaboradores = [], onExcluir}: Props){
     const navigate = useNavigate();
 
     const [filtroNome, setFiltroNome] = useState("");
     const [filtroCargo, setFiltroCargo] = useState("");
     const [filtroAreaCargo, setFiltroAreaCargo] = useState("");
+    const [filtroStatus, setFiltroStatus] = useState("");
     const [salarioMin, setSalarioMin] = useState("");
     const [salarioMax, setSalarioMax] = useState("");
 
@@ -27,10 +30,11 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
     const colaboradoresFiltrados = colaboradores.filter((colaborador) => {
         const nome = colaborador.name.toLocaleLowerCase().includes(filtroNome.toLowerCase());
         const cargo = colaborador.cargo.toLowerCase().includes(filtroCargo.toLowerCase());
-        const areaCargo = colaborador.areaCargo.toLowerCase().includes(filtroAreaCargo.toLowerCase());
+        const areaCargo = filtroAreaCargo === "" || colaborador.areaCargo === filtroAreaCargo;
+        const status = filtroStatus === "" || colaborador.status === filtroStatus;
         const min = salarioMin === "" || colaborador.salario >= Number(salarioMin);
         const max = salarioMax === "" || colaborador.salario <= Number(salarioMax);
-        return nome && cargo && areaCargo && min && max;
+        return nome && cargo && areaCargo && status && min && max;
     })
 
     return(
@@ -60,6 +64,12 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
                         <option key={area} value={area}>{area}</option>
                     ))}
                 </select>
+                <select value={filtroStatus} onChange={(e) => setFiltroStatus(e.target.value)}>
+                    <option value="">Todos os status</option>
+                    {status_options.map((status) => (
+                        <option key={status} value={status}>{status}</option>
+                    ))}
+                </select>
                 <input
                     type="number"
                     placeholder="Salário mínimo"
@@ -81,6 +91,7 @@ function ListaColaborador({colaboradores = [], onExcluir}: Props){
                     <p><strong>Nome:</strong> {colaborador.name}</p>
                     <p><strong>Cargo:</strong> {colaborador.cargo}</p>
                     <p><strong>Área Cargo:</strong> {colaborador.areaCargo}</p>
+                    <p><strong>Status:</strong> {colaborador.status}</p>
                     <p><strong>Idade:</strong> {colaborador.idade}</p>
                     <p><strong>Salário:</strong> R$ {colaborador.salario}</p>
                     <button onClick={() => navigate("/editarColaborador/" + colaborador.id)}>Editar</button>

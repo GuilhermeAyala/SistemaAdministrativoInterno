@@ -1,4 +1,5 @@
-export const Areas_Cargo = ["RH", "Financeiro", "Logísitica", "Marketing", "operações/Produção", "TI"];
+export const Areas_Cargo = ["RH", "Financeiro", "Logísitica", "Marketing", "Operações/Produção", "TI"];
+export type StatusColaborador = "Afastado" | "Ferias" | "Ativo" | "Inativo";
 
 export type AreaCargo = typeof Areas_Cargo[number];
 
@@ -9,4 +10,5 @@ export type Colaborador = {
         cargo: string;
         idade: number;
         salario: number;
+        status: StatusColaborador;
     }

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { Colaborador } from "../types/colaborador";
 import { Bar } from "react-chartjs-2";
 import {
@@ -18,6 +19,7 @@ type Props = {
 const CORES = ["#1D9E75", "#7F77DD", "#EF9F27", "#D85A30", "#888780", "#378ADD", "#D4537E"];
 
 function Dashboard({ colaboradores }: Props) {
+  const navigate = useNavigate();
   const total = colaboradores.length;
 
   const custoMensal = useMemo(
@@ -95,6 +97,8 @@ function Dashboard({ colaboradores }: Props) {
           }}
         />
       </div>
+
+      <button onClick={() => navigate("/TelaAdmin")}>Voltar para Tela do Administrador</button>
     </div>
   );
 }
