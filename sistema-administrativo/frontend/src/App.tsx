@@ -5,7 +5,7 @@ import LoginForm from './components/LoginForm';
 import AdicionarColaborador from './components/AdicionarColaborador';
 import EditarColaborador from './components/EditarColaborador';
 import TelaAdmin from './components/TelaAdmin';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {

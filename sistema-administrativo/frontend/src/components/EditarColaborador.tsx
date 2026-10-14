@@ -70,13 +70,13 @@ function EditarColaborador({colaboradores, setColaboradores }: Props){
                 {Areas_Cargo.map((area) => (
                     <option key={area} value={area}>{area}</option>
                 ))}
-            </select>
+            </select><br/>
             <input name="cargo" placeholder="Cargo" value={formEditar.cargo} type="text" onChange={handleChange}/><br />
             <select name="status" value={formEditar.status} onChange={handleSelectChange}>
                 {status_options.map((s) => (
                     <option key={s} value={s}>{s}</option>
                 ))}
-            </select>
+            </select><br/>
             <input name="idade" placeholder="Idade" value={formEditar.idade} type="number" onChange={handleChange}/><br />
             <input name="salario" placeholder="Salario" value={formEditar.salario} type="number" onChange={handleChange}/><br />
             <button onClick={salvarEdicao}>Salvar</button>
